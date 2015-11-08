@@ -89,7 +89,7 @@ ifeq '$(PORT)' 'lpc2xxx'
 SRC_TXT +=  netif/cs8900a_lpc_e2129.c
 endif
 
-MODULES =	$(RELROOT)/../picoos-micro 
+MODULES +=	$(RELROOT)/../picoos-micro 
 DIR_USRINC +=	include \
 		$(LWIPDIR)/include \
 		$(LWIPDIR)/include/ipv4 \
