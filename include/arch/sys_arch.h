@@ -35,6 +35,7 @@
 #define __ARCH_SYS_ARCH_H
 
 #include <picoos.h>
+#include <picoos-u.h>
 
 /*
  * Semaphores map to Pico]OS nano layer api directly.
@@ -53,8 +54,7 @@ typedef NOSMUTEX_t sys_mutex_t;
 /*
  * Mailbox implementation.
  */
-struct sys_mbox;
-typedef struct sys_mbox *sys_mbox_t;
+typedef UosRing* sys_mbox_t;
 #define sys_mbox_valid(mbox) (((mbox) != NULL) && (*(mbox) != NULL))
 #define sys_mbox_set_invalid(mbox) do { if((mbox) != NULL) { *(mbox) = NULL; }} while(0)
 
