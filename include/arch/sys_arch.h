@@ -66,9 +66,8 @@ typedef NOSTASK_t sys_thread_t;
 /*
  * Locking uses interrupt blocking currently.
  */
-#define SYS_ARCH_DECL_PROTECT(lev) POS_LOCKFLAGS
-#define SYS_ARCH_PROTECT(lev) POS_SCHED_LOCK
-#define SYS_ARCH_UNPROTECT(lev) POS_SCHED_UNLOCK
+
+typedef POSCFG_LOCK_FLAGSTYPE sys_prot_t;
 
 #endif /* LWIP_ARCH_SYS_ARCH_H */
 

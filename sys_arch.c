@@ -324,6 +324,22 @@ void sys_mbox_free(sys_mbox_t *mb)
 }
 
 /*
+ * Preemption protection.
+ */
+sys_prot_t sys_arch_protect()
+{
+  POS_LOCKFLAGS;
+
+  POS_SCHED_LOCK;
+  return flags;
+}
+
+void sys_arch_unprotect(sys_prot_t flags)
+{
+  POS_SCHED_UNLOCK;
+}
+
+/*
  * Thread creation, use Pico]OS nano layer directly.
  */
 sys_thread_t sys_thread_new(const char *name, lwip_thread_fn thread, void *arg, int stacksize, int prio)
