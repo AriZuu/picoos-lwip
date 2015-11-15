@@ -183,6 +183,10 @@ void sys_mbox_free(sys_mbox_t *mb)
   }
 }
 
+#if SYS_LIGHTWEIGHT_PROT != 1
+#error SYS_LIGHTWIGHT_PROT must be defined as 1
+#endif
+
 /*
  * Preemption protection.
  */
