@@ -94,7 +94,8 @@ MODULES +=	$(RELROOT)/../picoos-micro
 DIR_USRINC +=	include \
 		$(LWIPDIR)/include \
 		$(LWIPDIR)/include/ipv4 \
-		$(LWIPDIR)/include/ipv6
+		$(LWIPDIR)/include/ipv6 \
+		$(LWIP_DRIVER_INC)
 
 ifeq '$(strip $(DIR_OUTPUT))' ''
 DIR_OUTPUT = $(CURRENTDIR)/bin
