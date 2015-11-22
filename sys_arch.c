@@ -36,6 +36,8 @@
 #include "lwip/opt.h"
 #include "lwip/stats.h"
 
+#define DEFAULT_MBOX_SIZE 10
+
 /*
  * Mutex implementation uses Pico]OS nano layer mutex api directly.
  */
@@ -114,6 +116,9 @@ void sys_sem_free(sys_sem_t *sem)
 
 err_t sys_mbox_new(sys_mbox_t *mb, int size)
 {
+  if (size == 0)
+    size = DEFAULT_MBOX_SIZE;
+
   *mb = uosRingCreate(sizeof(void*), size);
   if (*mb == NULL)
     return ERR_MEM;
