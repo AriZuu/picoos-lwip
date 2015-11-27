@@ -69,5 +69,11 @@ typedef NOSTASK_t sys_thread_t;
 
 typedef POSCFG_LOCK_FLAGSTYPE sys_prot_t;
 
+/*
+ * Random numbers.
+ */
+void sys_random_init(unsigned short seed);
+int sys_random(void);
+
 #endif /* LWIP_ARCH_SYS_ARCH_H */
 

@@ -223,3 +223,17 @@ void sys_init(void)
 {
 }
 
+/*
+ * Random numbers.
+ */
+static unsigned int seedValue;
+void sys_random_init(unsigned short seed)
+{
+  seedValue = seed;
+}
+
+int sys_random(void)
+{
+  return (unsigned short)rand_r(&seedValue);
+}
+
