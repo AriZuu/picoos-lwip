@@ -77,7 +77,15 @@ NETIFFILES =	$(LWIPDIR)/netif/etharp.c
 # ARCHFILES: Architecture specific files.
 ARCHFILES =	sys_arch.c
 
-SRC_TXT =	$(COREFILES) $(CORE4FILES) $(CORE6FILES) $(SNMPFILES) $(APIFILES) $(NETIFFILES) $(ARCHFILES)
+SRC_TXT =	sockets.c \
+		$(COREFILES) \
+		$(CORE4FILES) \
+		$(CORE6FILES) \
+		$(SNMPFILES) \
+		$(APIFILES) \
+		$(NETIFFILES) \
+		$(ARCHFILES)
+
 EXTRA_CFLAGS = -Wno-address
 SRC_HDR =	
 SRC_OBJ =
