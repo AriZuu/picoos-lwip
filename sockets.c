@@ -51,6 +51,7 @@ static int sockInit(const UosFS*);
 static int sockClose(UosFile* file);
 static int sockRead(UosFile* file, char* buf, int max);
 static int sockWrite(UosFile* file, const char* buf, int max);
+static int sockFStat(UosFile* file, UosFileInfo* st);
 
 static const UosFS_I sockFS_I = {
   
@@ -61,7 +62,8 @@ static const UosFile_I sock_I = {
 
   .close  = sockClose,
   .read   = sockRead,
-  .write  = sockWrite
+  .write  = sockWrite,
+  .fstat  = sockFStat
 };
 
 void netInit()
@@ -156,5 +158,14 @@ static int sockWrite(UosFile* file, const char *buf, int len)
 
   return lwip_write(sock, buf, len);
 }
+
+static int sockFStat(UosFile* file, UosFileInfo* st)
+{
+  st->isDir = false;
+  st->isSocket = true;
+  st->size = 0;
+  return 0;
+}
+
 
 #endif
