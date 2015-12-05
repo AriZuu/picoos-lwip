@@ -43,27 +43,27 @@ extern "C"
 
 #if !LWIP_COMPAT_SOCKETS
 
-void lwipMount(void);
-int lwipFD(int s);
+void netInit(void);
+int netLwIP_FD(int s);
 
 int accept(int s, struct sockaddr *addr, socklen_t *addrlen);
 int socket(int domain, int type, int protocol);
 
-#define bind(s, name, namelen)                         lwip_bind(lwipFD(s), name, namelen)
-#define shutdown(s, how)                               lwip_shutdown(lwipFD(s), how)
-#define getpeername(s, name, namelen)                  lwip_getpeername(lwipFD(s), name, namelen)
-#define getsockname(s, name, namelen)                  lwip_getsockname (lwipFD(s), name, namelen)
-#define getsockopt (s, level, optname, optval, optlen) lwip_getsockopt (lwipFD(s), level, optname, optval, optlen)
-#define setsockopt(s, level, optname, optval, optlen)  lwip_setsockopt(lwipFD(s), level, optname, optval, optlen)
-#define connect(s, name, namelen)                      lwip_connect(lwipFD(s), name, namelen)
-#define listen(s, backlog)                             lwip_listen(lwipFD(s), backlog)
-#define recv(s, mem, len, flags)                       lwip_recv(lwipFD(s), mem, len, flags)
-#define recvfrom(s, mem, len, flags, from, fromlen)    lwip_recvfrom(lwipFD(s), mem, len, flags, from, fromlen)
-#define send(s, dataptr, size, flags)                  lwip_send(lwipFD(s), dataptr, size, flags)
-#define sendmsg(s, message, flags)                     lwip_sendmsg(lwipFD(s), message, flags)
-#define sendto(s, dataptr, size, flags, to, tolen)     lwip_sendto(lwipFD(s), dataptr, size, flags, to, tolen)
-#define writev(s, iov, iovcnt)                         lwip_writev(lwipFD(s), iov, iovcnt)
-#define closesocket(s)                                 lwip_close(lwipFD(s))
+#define bind(s, name, namelen)                         lwip_bind(netLwIP_FD(s), name, namelen)
+#define shutdown(s, how)                               lwip_shutdown(netLwIP_FD(s), how)
+#define getpeername(s, name, namelen)                  lwip_getpeername(netLwIP_FD(s), name, namelen)
+#define getsockname(s, name, namelen)                  lwip_getsockname (netLwIP_FD(s), name, namelen)
+#define getsockopt (s, level, optname, optval, optlen) lwip_getsockopt (netLwIP_FD(s), level, optname, optval, optlen)
+#define setsockopt(s, level, optname, optval, optlen)  lwip_setsockopt(netLwIP_FD(s), level, optname, optval, optlen)
+#define connect(s, name, namelen)                      lwip_connect(netLwIP_FD(s), name, namelen)
+#define listen(s, backlog)                             lwip_listen(netLwIP_FD(s), backlog)
+#define recv(s, mem, len, flags)                       lwip_recv(netLwIP_FD(s), mem, len, flags)
+#define recvfrom(s, mem, len, flags, from, fromlen)    lwip_recvfrom(netLwIP_FD(s), mem, len, flags, from, fromlen)
+#define send(s, dataptr, size, flags)                  lwip_send(netLwIP_FD(s), dataptr, size, flags)
+#define sendmsg(s, message, flags)                     lwip_sendmsg(netLwIP_FD(s), message, flags)
+#define sendto(s, dataptr, size, flags, to, tolen)     lwip_sendto(netLwIP_FD(s), dataptr, size, flags, to, tolen)
+#define writev(s, iov, iovcnt)                         lwip_writev(netLwIP_FD(s), iov, iovcnt)
+#define closesocket(s)                                 lwip_close(netLwIP_FD(s))
 
 #define gethostbyname(name) lwip_gethostbyname(name)
 #define gethostbyname_r(name, ret, buf, buflen, result, h_errnop) \

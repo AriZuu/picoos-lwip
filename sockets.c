@@ -64,7 +64,7 @@ static const UosFile_I sock_I = {
   .write  = sockWrite
 };
 
-void lwipMount()
+void netInit()
 {
   sockFS.base.mountPoint = "/socket";
   sockFS.base.i = &sockFS_I;
@@ -77,7 +77,7 @@ static int sockInit(const UosFS* fs)
   return 0;
 }
 
-int lwipFD(int s)
+int netLwIP_FD(int s)
 {
   UosFile* file = uosFile(s);
   if (file == NULL)
@@ -117,7 +117,7 @@ int accept(int s, struct sockaddr *addr, socklen_t *addrlen)
 
   int sock;
 
-  sock = lwip_accept(lwipFD(s), addr, addrlen);
+  sock = lwip_accept(netLwIP_FD(s), addr, addrlen);
   if (sock == -1) {
 
     uosFileFree(file);
