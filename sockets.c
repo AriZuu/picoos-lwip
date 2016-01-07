@@ -53,12 +53,12 @@ static int sockRead(UosFile* file, char* buf, int max);
 static int sockWrite(UosFile* file, const char* buf, int max);
 static int sockFStat(UosFile* file, UosFileInfo* st);
 
-static const UosFS_I sockFS_I = {
+static const UosFSConf sockFSConf = {
   
   .init   = sockInit,
 };
 
-static const UosFile_I sock_I = {
+static const UosFileConf sockConf = {
 
   .close  = sockClose,
   .read   = sockRead,
@@ -69,7 +69,7 @@ static const UosFile_I sock_I = {
 void netInit()
 {
   sockFS.base.mountPoint = "/socket";
-  sockFS.base.i = &sockFS_I;
+  sockFS.base.cf = &sockFSConf;
 
   uosMount(&sockFS.base);
 
@@ -85,7 +85,7 @@ int netLwIP_FD(int s)
   if (file == NULL)
     return -1;
 
-  P_ASSERT("lwipFD", file->fs->i == &sockFS_I);
+  P_ASSERT("lwipFD", file->fs->cf == &sockFSConf);
   return (int)file->fsPriv;
 }
 
@@ -105,7 +105,7 @@ int socket(int domain, int type, int protocol)
   }
 
   file->fs     = &sockFS.base;
-  file->i      = &sock_I;
+  file->cf     = &sockConf;
   file->fsPriv = (void*)sock;
 
   return uosFileSlot(file);
@@ -127,7 +127,7 @@ int accept(int s, struct sockaddr *addr, socklen_t *addrlen)
   }
 
   file->fs     = &sockFS.base;
-  file->i      = &sock_I;
+  file->cf     = &sockConf;
   file->fsPriv = (void*)sock;
 
   return uosFileSlot(file);
@@ -135,7 +135,7 @@ int accept(int s, struct sockaddr *addr, socklen_t *addrlen)
 
 static int sockClose(UosFile* file)
 {
-  P_ASSERT("sockClose", file->fs->i == &sockFS_I);
+  P_ASSERT("sockClose", file->fs->cf == &sockFSConf);
   int sock = (int)file->fsPriv;
 
   lwip_close(sock);
@@ -145,7 +145,7 @@ static int sockClose(UosFile* file)
 
 static int sockRead(UosFile* file, char *buf, int len)
 {
-  P_ASSERT("sockRead", file->fs->i == &sockFS_I);
+  P_ASSERT("sockRead", file->fs->cf == &sockFSConf);
   int sock = (int)file->fsPriv;
 
   return lwip_read(sock, buf, len);
@@ -153,7 +153,7 @@ static int sockRead(UosFile* file, char *buf, int len)
 
 static int sockWrite(UosFile* file, const char *buf, int len)
 {
-  P_ASSERT("sockWrite", file->fs->i == &sockFS_I);
+  P_ASSERT("sockWrite", file->fs->cf == &sockFSConf);
   int sock = (int)file->fsPriv;
 
   return lwip_write(sock, buf, len);
