@@ -37,6 +37,11 @@
 #include <picoos.h>
 #include <stdint.h>
 
+#if __GNUC__ >= 5
+#include <sys/types.h>
+#define LWIP_TIMEVAL_PRIVATE 0
+#endif
+
 /* Types based on stdint.h */
 
 typedef uint8_t            u8_t; 
