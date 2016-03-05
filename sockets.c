@@ -86,7 +86,7 @@ int netLwIP_FD(int s)
     return -1;
 
   P_ASSERT("lwipFD", file->fs->cf == &sockFSConf);
-  return (int)file->fsPriv;
+  return file->fsPrivFd;
 }
 
 int socket(int domain, int type, int protocol)
@@ -104,9 +104,9 @@ int socket(int domain, int type, int protocol)
     return -1;
   }
 
-  file->fs     = &sockFS.base;
-  file->cf     = &sockConf;
-  file->fsPriv = (void*)sock;
+  file->fs       = &sockFS.base;
+  file->cf       = &sockConf;
+  file->fsPrivFd = sock;
 
   return uosFileSlot(file);
 }
@@ -126,9 +126,9 @@ int accept(int s, struct sockaddr *addr, socklen_t *addrlen)
     return -1;
   }
 
-  file->fs     = &sockFS.base;
-  file->cf     = &sockConf;
-  file->fsPriv = (void*)sock;
+  file->fs       = &sockFS.base;
+  file->cf       = &sockConf;
+  file->fsPrivFd = sock;
 
   return uosFileSlot(file);
 }
@@ -136,7 +136,7 @@ int accept(int s, struct sockaddr *addr, socklen_t *addrlen)
 static int sockClose(UosFile* file)
 {
   P_ASSERT("sockClose", file->fs->cf == &sockFSConf);
-  int sock = (int)file->fsPriv;
+  int sock = file->fsPrivFd;
 
   lwip_close(sock);
   uosFileFree(file);
@@ -146,7 +146,7 @@ static int sockClose(UosFile* file)
 static int sockRead(UosFile* file, char *buf, int len)
 {
   P_ASSERT("sockRead", file->fs->cf == &sockFSConf);
-  int sock = (int)file->fsPriv;
+  int sock = file->fsPrivFd;
 
   return lwip_read(sock, buf, len);
 }
@@ -154,7 +154,7 @@ static int sockRead(UosFile* file, char *buf, int len)
 static int sockWrite(UosFile* file, const char *buf, int len)
 {
   P_ASSERT("sockWrite", file->fs->cf == &sockFSConf);
-  int sock = (int)file->fsPriv;
+  int sock = file->fsPrivFd;
 
   return lwip_write(sock, buf, len);
 }
