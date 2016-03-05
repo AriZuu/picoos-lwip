@@ -48,6 +48,7 @@ include $(LWIPDIR)/Filelists.mk
 ARCHFILES =	sys_arch.c
 
 SRC_TXT =	sockets.c \
+		apps/dhcps/dhcps.c \
 		$(COREFILES) \
 		$(CORE4FILES) \
 		$(CORE6FILES) \
