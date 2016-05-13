@@ -285,6 +285,7 @@ static void handleRequest(struct pbuf* p, struct netif* netif)
 
     if (!memcmp(&reqAddr, &newAddr, 4) != 0) {
 
+      ip4_addr_copy(resp->yiaddr, reqAddr);
       option_ptr = (uint8_t *) &resp->options;
 
       addOptionByte(&option_ptr, OPT_MSGTYPE, DHCPACK);
