@@ -224,6 +224,22 @@ void sys_init(void)
 }
 
 /*
+ * System time.
+ */
+u32_t sys_now()
+{
+  u32_t t;
+
+  t = (u32_t) jiffies * 1000;
+  return t / HZ;
+}
+
+u32_t sys_jiffies()
+{
+  return jiffies;
+}
+
+/*
  * Random numbers.
  */
 static unsigned int seedValue;
