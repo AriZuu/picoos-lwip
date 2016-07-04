@@ -62,12 +62,14 @@ typedef uintptr_t          mem_ptr_t;
 #define X32_F "lx"
 #define SZT_F "uz"
 
+#ifndef BYTE_ORDER
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
 #define BYTE_ORDER LITTLE_ENDIAN
 #elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 #define BYTE_ORDER BIG_ENDIAN
 #else
 #error Unknown byte order
+#endif
 #endif
 
 #define LWIP_PROVIDE_ERRNO
