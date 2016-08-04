@@ -228,10 +228,7 @@ void sys_init(void)
  */
 u32_t sys_now()
 {
-  u32_t t;
-
-  t = (u32_t) jiffies * 1000;
-  return t / HZ;
+  return jiffies * 1000 / HZ;
 }
 
 u32_t sys_jiffies()
