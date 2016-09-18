@@ -50,6 +50,7 @@
 #include "lwip/ip_addr.h"
 #include "netif/etharp.h"
 #include "lwip/dhcp.h"
+#include "lwip/prot/dhcp.h"
 
 /*
  * DHCP message types.
