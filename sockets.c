@@ -81,7 +81,7 @@ static int sockInit(const UosFS* fs)
 
 int netLwIP_FD(int s)
 {
-  UosFile* file = uosFile(s);
+  UosFile* file = uosSlot2File(s);
   if (file == NULL)
     return -1;
 
