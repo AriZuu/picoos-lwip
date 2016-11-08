@@ -108,7 +108,7 @@ int socket(int domain, int type, int protocol)
   file->cf       = &sockConf;
   file->fsPrivFd = sock;
 
-  return uosFileSlot(file);
+  return uosFile2Slot(file);
 }
 
 int accept(int s, struct sockaddr *addr, socklen_t *addrlen)
@@ -130,7 +130,7 @@ int accept(int s, struct sockaddr *addr, socklen_t *addrlen)
   file->cf       = &sockConf;
   file->fsPrivFd = sock;
 
-  return uosFileSlot(file);
+  return uosFile2Slot(file);
 }
 
 static int sockClose(UosFile* file)
