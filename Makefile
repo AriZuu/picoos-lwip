@@ -55,7 +55,8 @@ SRC_TXT =	sockets.c \
 		$(SNMPFILES) \
 		$(APIFILES) \
 		$(NETIFFILES) \
-		$(ARCHFILES)
+		$(ARCHFILES) \
+		$(SNTPFILES)
 
 EXTRA_CFLAGS = -Wno-address
 SRC_HDR =	
