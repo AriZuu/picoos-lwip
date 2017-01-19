@@ -78,7 +78,6 @@ typedef uintptr_t          mem_ptr_t;
 #define PACK_STRUCT_STRUCT __attribute__ ((__packed__))
 #define PACK_STRUCT_END
 #define PACK_STRUCT_FIELD(fld) fld
-#define ALIGNED(n)  __attribute__((aligned (n)))
 
 int sys_random(void);
 #define LWIP_RAND() sys_random()
