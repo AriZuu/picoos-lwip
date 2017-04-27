@@ -44,7 +44,7 @@
 
 err_t sys_mutex_new(sys_mutex_t *mutex)
 {
-  *mutex = nosMutexCreate(0, NULL);
+  *mutex = nosMutexCreate(0, "lwip_m*");
   if (*mutex == NULL)
     return ERR_MEM;
   
@@ -72,7 +72,7 @@ void sys_mutex_free(sys_mutex_t *mutex)
 
 err_t sys_sem_new(sys_sem_t *sem, u8_t count)
 {
-  *sem = nosSemaCreate(count, 0, NULL);
+  *sem = nosSemaCreate(count, 0, "lwip_s*");
   if (*sem == NULL)
     return ERR_MEM;
   
@@ -107,7 +107,7 @@ u32_t sys_arch_sem_wait(sys_sem_t *sem, u32_t timeout)
 
 void sys_sem_free(sys_sem_t *sem)
 {
-  posSemaDestroy(*sem);
+  nosSemaDestroy(*sem);
 }
 
 /*
