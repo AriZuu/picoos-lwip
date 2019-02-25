@@ -51,6 +51,7 @@
 #include "netif/etharp.h"
 #include "lwip/dhcp.h"
 #include "lwip/prot/dhcp.h"
+#include "lwip/prot/iana.h"
 
 /*
  * DHCP message types.
@@ -232,7 +233,7 @@ static void handleDiscover(struct pbuf* p, struct netif* netif)
     addOptionIP(&option_ptr, OPT_SERVERID, netif_ip4_addr(netif));
     *option_ptr++ = OPT_END;
 
-    udp_sendto_if(dhcpPcb, rp, IP_ADDR_BROADCAST, DHCP_CLIENT_PORT, netif);
+    udp_sendto_if(dhcpPcb, rp, IP_ADDR_BROADCAST, LWIP_IANA_PORT_DHCP_CLIENT, netif);
     pbuf_free(rp);
 
     printf("dhcps: offer %02X:%02X:%02X:%02X:%02X:%02X -> %s\n", resp->chaddr[0],
@@ -302,7 +303,7 @@ static void handleRequest(struct pbuf* p, struct netif* netif)
 
       ip_addr_set_ip4_u32(dp, ip4_addr_get_u32(&resp->yiaddr));
       etharp_add_static_entry(ip_2_ip4(dp), (struct eth_addr *) resp->chaddr);
-      udp_sendto_if(dhcpPcb, rp, &dest, DHCP_CLIENT_PORT, netif);
+      udp_sendto_if(dhcpPcb, rp, &dest, LWIP_IANA_PORT_DHCP_CLIENT, netif);
       pbuf_free(rp);
 
       printf("dhcps: ack %02X:%02X:%02X:%02X:%02X:%02X -> %s\n", resp->chaddr[0],
@@ -323,7 +324,7 @@ static void handleRequest(struct pbuf* p, struct netif* netif)
       addOptionIP(&option_ptr, OPT_SERVERID, netif_ip4_addr(netif));
       *option_ptr++ = OPT_END;
 
-      udp_sendto_if(dhcpPcb, rp, IP_ADDR_BROADCAST, DHCP_CLIENT_PORT, netif);
+      udp_sendto_if(dhcpPcb, rp, IP_ADDR_BROADCAST, LWIP_IANA_PORT_DHCP_CLIENT, netif);
       pbuf_free(rp);
 
     }
@@ -382,7 +383,7 @@ static void dhcpServerStartRaw(void* arg)
   }
 
   ip_set_option(dhcpPcb, SOF_BROADCAST);
-  udp_bind(dhcpPcb, IP_ADDR_ANY, DHCP_SERVER_PORT);
+  udp_bind(dhcpPcb, IP_ADDR_ANY, LWIP_IANA_PORT_DHCP_SERVER);
 
   udp_recv(dhcpPcb, dhcpRecv, netif);
 }

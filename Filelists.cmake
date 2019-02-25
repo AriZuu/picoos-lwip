@@ -1,169 +1,215 @@
-include_guard(GLOBAL)
+# Stripped-down version of Filelists.cmake
 
-# COREFILES, CORE4FILES: The minimum set of files needed for lwIP.
-set(COREFILES
-	${LWIPDIR}/core/init.c
-	${LWIPDIR}/core/def.c
-	${LWIPDIR}/core/dns.c
-	${LWIPDIR}/core/inet_chksum.c
-	${LWIPDIR}/core/ip.c
-	${LWIPDIR}/core/mem.c
-	${LWIPDIR}/core/memp.c
-	${LWIPDIR}/core/netif.c
-	${LWIPDIR}/core/pbuf.c
-	${LWIPDIR}/core/raw.c
-	${LWIPDIR}/core/stats.c
-	${LWIPDIR}/core/sys.c
-	${LWIPDIR}/core/tcp.c
-	${LWIPDIR}/core/tcp_in.c
-	${LWIPDIR}/core/tcp_out.c
-	${LWIPDIR}/core/timeouts.c
-	${LWIPDIR}/core/udp.c)
-
-set(CORE4FILES
-	${LWIPDIR}/core/ipv4/autoip.c
-	${LWIPDIR}/core/ipv4/dhcp.c
-	${LWIPDIR}/core/ipv4/etharp.c
-	${LWIPDIR}/core/ipv4/icmp.c
-	${LWIPDIR}/core/ipv4/igmp.c
-	${LWIPDIR}/core/ipv4/ip4_frag.c
-	${LWIPDIR}/core/ipv4/ip4.c
-	${LWIPDIR}/core/ipv4/ip4_addr.c)
-
-set(CORE6FILES
-	${LWIPDIR}/core/ipv6/dhcp6.c
-	${LWIPDIR}/core/ipv6/ethip6.c
-	${LWIPDIR}/core/ipv6/icmp6.c
-	${LWIPDIR}/core/ipv6/inet6.c
-	${LWIPDIR}/core/ipv6/ip6.c
-	${LWIPDIR}/core/ipv6/ip6_addr.c
-	${LWIPDIR}/core/ipv6/ip6_frag.c
-	${LWIPDIR}/core/ipv6/mld6.c
-	${LWIPDIR}/core/ipv6/nd6.c)
+# The minimum set of files needed for lwIP.
+set(lwipcore_SRCS
+    ${LWIP_DIR}/src/core/init.c
+    ${LWIP_DIR}/src/core/def.c
+    ${LWIP_DIR}/src/core/dns.c
+    ${LWIP_DIR}/src/core/inet_chksum.c
+    ${LWIP_DIR}/src/core/ip.c
+    ${LWIP_DIR}/src/core/mem.c
+    ${LWIP_DIR}/src/core/memp.c
+    ${LWIP_DIR}/src/core/netif.c
+    ${LWIP_DIR}/src/core/pbuf.c
+    ${LWIP_DIR}/src/core/raw.c
+    ${LWIP_DIR}/src/core/stats.c
+    ${LWIP_DIR}/src/core/sys.c
+    ${LWIP_DIR}/src/core/altcp.c
+    ${LWIP_DIR}/src/core/altcp_alloc.c
+    ${LWIP_DIR}/src/core/altcp_tcp.c
+    ${LWIP_DIR}/src/core/tcp.c
+    ${LWIP_DIR}/src/core/tcp_in.c
+    ${LWIP_DIR}/src/core/tcp_out.c
+    ${LWIP_DIR}/src/core/timeouts.c
+    ${LWIP_DIR}/src/core/udp.c
+)
+set(lwipcore4_SRCS
+    ${LWIP_DIR}/src/core/ipv4/autoip.c
+    ${LWIP_DIR}/src/core/ipv4/dhcp.c
+    ${LWIP_DIR}/src/core/ipv4/etharp.c
+    ${LWIP_DIR}/src/core/ipv4/icmp.c
+    ${LWIP_DIR}/src/core/ipv4/igmp.c
+    ${LWIP_DIR}/src/core/ipv4/ip4_frag.c
+    ${LWIP_DIR}/src/core/ipv4/ip4.c
+    ${LWIP_DIR}/src/core/ipv4/ip4_addr.c
+)
+set(lwipcore6_SRCS
+    ${LWIP_DIR}/src/core/ipv6/dhcp6.c
+    ${LWIP_DIR}/src/core/ipv6/ethip6.c
+    ${LWIP_DIR}/src/core/ipv6/icmp6.c
+    ${LWIP_DIR}/src/core/ipv6/inet6.c
+    ${LWIP_DIR}/src/core/ipv6/ip6.c
+    ${LWIP_DIR}/src/core/ipv6/ip6_addr.c
+    ${LWIP_DIR}/src/core/ipv6/ip6_frag.c
+    ${LWIP_DIR}/src/core/ipv6/mld6.c
+    ${LWIP_DIR}/src/core/ipv6/nd6.c
+)
 
 # APIFILES: The files which implement the sequential and socket APIs.
-set(APIFILES
-	${LWIPDIR}/api/api_lib.c
-	${LWIPDIR}/api/api_msg.c
-	${LWIPDIR}/api/err.c
-	${LWIPDIR}/api/netbuf.c
-	${LWIPDIR}/api/netdb.c
-	${LWIPDIR}/api/netifapi.c
-	${LWIPDIR}/api/sockets.c
-	${LWIPDIR}/api/tcpip.c)
+set(lwipapi_SRCS
+    ${LWIP_DIR}/src/api/api_lib.c
+    ${LWIP_DIR}/src/api/api_msg.c
+    ${LWIP_DIR}/src/api/err.c
+    ${LWIP_DIR}/src/api/if_api.c
+    ${LWIP_DIR}/src/api/netbuf.c
+    ${LWIP_DIR}/src/api/netdb.c
+    ${LWIP_DIR}/src/api/netifapi.c
+    ${LWIP_DIR}/src/api/sockets.c
+    ${LWIP_DIR}/src/api/tcpip.c
+)
 
-# NETIFFILES: Files implementing various generic network interface functions
-set(NETIFFILES
-	${LWIPDIR}/netif/ethernet.c
-	${LWIPDIR}/netif/slipif.c)
+# Files implementing various generic network interface functions
+set(lwipnetif_SRCS
+    ${LWIP_DIR}/src/netif/ethernet.c
+    ${LWIP_DIR}/src/netif/bridgeif.c
+    ${LWIP_DIR}/src/netif/bridgeif_fdb.c
+    ${LWIP_DIR}/src/netif/slipif.c
+)
 
-# SIXLOWPAN: 6LoWPAN
-set(SIXLOWPAN
-	${LWIPDIR}/netif/lowpan6.c)
+# 6LoWPAN
+set(lwipsixlowpan_SRCS
+    ${LWIP_DIR}/src/netif/lowpan6_common.c
+    ${LWIP_DIR}/src/netif/lowpan6.c
+    ${LWIP_DIR}/src/netif/lowpan6_ble.c
+    ${LWIP_DIR}/src/netif/zepif.c
+)
 
-# PPPFILES: PPP
-set(PPPFILES
-	${LWIPDIR}/netif/ppp/auth.c
-	${LWIPDIR}/netif/ppp/ccp.c
-	${LWIPDIR}/netif/ppp/chap-md5.c
-	${LWIPDIR}/netif/ppp/chap_ms.c
-	${LWIPDIR}/netif/ppp/chap-new.c
-	${LWIPDIR}/netif/ppp/demand.c
-	${LWIPDIR}/netif/ppp/eap.c
-	${LWIPDIR}/netif/ppp/ecp.c
-	${LWIPDIR}/netif/ppp/eui64.c
-	${LWIPDIR}/netif/ppp/fsm.c
-	${LWIPDIR}/netif/ppp/ipcp.c
-	${LWIPDIR}/netif/ppp/ipv6cp.c
-	${LWIPDIR}/netif/ppp/lcp.c
-	${LWIPDIR}/netif/ppp/magic.c
-	${LWIPDIR}/netif/ppp/mppe.c
-	${LWIPDIR}/netif/ppp/multilink.c
-	${LWIPDIR}/netif/ppp/ppp.c
-	${LWIPDIR}/netif/ppp/pppapi.c
-	${LWIPDIR}/netif/ppp/pppcrypt.c
-	${LWIPDIR}/netif/ppp/pppoe.c
-	${LWIPDIR}/netif/ppp/pppol2tp.c
-	${LWIPDIR}/netif/ppp/pppos.c
-	${LWIPDIR}/netif/ppp/upap.c
-	${LWIPDIR}/netif/ppp/utils.c
-	${LWIPDIR}/netif/ppp/vj.c
-	${LWIPDIR}/netif/ppp/polarssl/arc4.c
-	${LWIPDIR}/netif/ppp/polarssl/des.c
-	${LWIPDIR}/netif/ppp/polarssl/md4.c
-	${LWIPDIR}/netif/ppp/polarssl/md5.c
-	${LWIPDIR}/netif/ppp/polarssl/sha1.c)
+# PPP
+set(lwipppp_SRCS
+    ${LWIP_DIR}/src/netif/ppp/auth.c
+    ${LWIP_DIR}/src/netif/ppp/ccp.c
+    ${LWIP_DIR}/src/netif/ppp/chap-md5.c
+    ${LWIP_DIR}/src/netif/ppp/chap_ms.c
+    ${LWIP_DIR}/src/netif/ppp/chap-new.c
+    ${LWIP_DIR}/src/netif/ppp/demand.c
+    ${LWIP_DIR}/src/netif/ppp/eap.c
+    ${LWIP_DIR}/src/netif/ppp/ecp.c
+    ${LWIP_DIR}/src/netif/ppp/eui64.c
+    ${LWIP_DIR}/src/netif/ppp/fsm.c
+    ${LWIP_DIR}/src/netif/ppp/ipcp.c
+    ${LWIP_DIR}/src/netif/ppp/ipv6cp.c
+    ${LWIP_DIR}/src/netif/ppp/lcp.c
+    ${LWIP_DIR}/src/netif/ppp/magic.c
+    ${LWIP_DIR}/src/netif/ppp/mppe.c
+    ${LWIP_DIR}/src/netif/ppp/multilink.c
+    ${LWIP_DIR}/src/netif/ppp/ppp.c
+    ${LWIP_DIR}/src/netif/ppp/pppapi.c
+    ${LWIP_DIR}/src/netif/ppp/pppcrypt.c
+    ${LWIP_DIR}/src/netif/ppp/pppoe.c
+    ${LWIP_DIR}/src/netif/ppp/pppol2tp.c
+    ${LWIP_DIR}/src/netif/ppp/pppos.c
+    ${LWIP_DIR}/src/netif/ppp/upap.c
+    ${LWIP_DIR}/src/netif/ppp/utils.c
+    ${LWIP_DIR}/src/netif/ppp/vj.c
+    ${LWIP_DIR}/src/netif/ppp/polarssl/arc4.c
+    ${LWIP_DIR}/src/netif/ppp/polarssl/des.c
+    ${LWIP_DIR}/src/netif/ppp/polarssl/md4.c
+    ${LWIP_DIR}/src/netif/ppp/polarssl/md5.c
+    ${LWIP_DIR}/src/netif/ppp/polarssl/sha1.c
+)
 
-# LWIPNOAPPSFILES: All LWIP files without apps
-set(LWIPNOAPPSFILES
-	${COREFILES}
-	${CORE4FILES}
-	${CORE6FILES}
-	${APIFILES}
-	${NETIFFILES}
-	${PPPFILES}
-	${SIXLOWPAN})
+# SNMPv3 agent
+set(lwipsnmp_SRCS
+    ${LWIP_DIR}/src/apps/snmp/snmp_asn1.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_core.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_mib2.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_mib2_icmp.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_mib2_interfaces.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_mib2_ip.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_mib2_snmp.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_mib2_system.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_mib2_tcp.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_mib2_udp.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_snmpv2_framework.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_snmpv2_usm.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_msg.c
+    ${LWIP_DIR}/src/apps/snmp/snmpv3.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_netconn.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_pbuf_stream.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_raw.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_scalar.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_table.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_threadsync.c
+    ${LWIP_DIR}/src/apps/snmp/snmp_traps.c
+)
 
-# SNMPFILES: SNMPv2c agent
-set(SNMPFILES	
-	${LWIPDIR}/apps/snmp/snmp_asn1.c
-	${LWIPDIR}/apps/snmp/snmp_core.c
-	${LWIPDIR}/apps/snmp/snmp_mib2.c
-	${LWIPDIR}/apps/snmp/snmp_mib2_icmp.c
-	${LWIPDIR}/apps/snmp/snmp_mib2_interfaces.c
-	${LWIPDIR}/apps/snmp/snmp_mib2_ip.c
-	${LWIPDIR}/apps/snmp/snmp_mib2_snmp.c
-	${LWIPDIR}/apps/snmp/snmp_mib2_system.c
-	${LWIPDIR}/apps/snmp/snmp_mib2_tcp.c
-	${LWIPDIR}/apps/snmp/snmp_mib2_udp.c
-	${LWIPDIR}/apps/snmp/snmp_msg.c
-	${LWIPDIR}/apps/snmp/snmpv3.c
-	${LWIPDIR}/apps/snmp/snmp_netconn.c
-	${LWIPDIR}/apps/snmp/snmp_pbuf_stream.c
-	${LWIPDIR}/apps/snmp/snmp_raw.c
-	${LWIPDIR}/apps/snmp/snmp_scalar.c
-	${LWIPDIR}/apps/snmp/snmp_table.c
-	${LWIPDIR}/apps/snmp/snmp_threadsync.c
-	${LWIPDIR}/apps/snmp/snmp_traps.c
-	${LWIPDIR}/apps/snmp/snmpv3_mbedtls.c
-	${LWIPDIR}/apps/snmp/snmpv3_dummy.c)
+# HTTP server + client
+set(lwiphttp_SRCS
+    ${LWIP_DIR}/src/apps/http/altcp_proxyconnect.c
+    ${LWIP_DIR}/src/apps/http/fs.c
+    ${LWIP_DIR}/src/apps/http/http_client.c
+    ${LWIP_DIR}/src/apps/http/httpd.c
+)
 
-# HTTPDFILES: HTTP server
-set(HTTPDFILES
-	${LWIPDIR}/apps/httpd/fs.c
-	${LWIPDIR}/apps/httpd/httpd.c)
+# MAKEFSDATA HTTP server host utility
+set(lwipmakefsdata_SRCS
+    ${LWIP_DIR}/src/apps/http/makefsdata/makefsdata.c
+)
 
-# LWIPERFFILES: IPERF server
-set(LWIPERFFILES
-	${LWIPDIR}/apps/lwiperf/lwiperf.c)
+# IPERF server
+set(lwipiperf_SRCS
+    ${LWIP_DIR}/src/apps/lwiperf/lwiperf.c
+)
 
-# SNTPFILES: SNTP client
-set(SNTPFILES
-	${LWIPDIR}/apps/sntp/sntp.c)
+# SMTP client
+set(lwipsmtp_SRCS
+    ${LWIP_DIR}/src/apps/smtp/smtp.c
+)
 
-# MDNSFILES: MDNS responder
-set(MDNSFILES	
-	${LWIPDIR}/apps/mdns/mdns.c)
+# SNTP client
+set(lwipsntp_SRCS
+    ${LWIP_DIR}/src/apps/sntp/sntp.c
+)
 
-# NETBIOSNSFILES: NetBIOS name server
-set(NETBIOSNSFILES	
-	${LWIPDIR}/apps/netbiosns/netbiosns.c)
+# MDNS responder
+set(lwipmdns_SRCS
+    ${LWIP_DIR}/src/apps/mdns/mdns.c
+)
 
-# TFTPFILES: TFTP server files
-set(TFTPFILES
-	${LWIPDIR}/apps/tftp/tftp_server.c)
+# NetBIOS name server
+set(lwipnetbios_SRCS
+    ${LWIP_DIR}/src/apps/netbiosns/netbiosns.c
+)
 
-# MQTTFILES: MQTT client files
-set(MQTTFILES
-	${LWIPDIR}/apps/mqtt/mqtt.c)
+# TFTP server files
+set(lwiptftp_SRCS
+    ${LWIP_DIR}/src/apps/tftp/tftp_server.c
+)
+
+# MQTT client files
+set(lwipmqtt_SRCS
+    ${LWIP_DIR}/src/apps/mqtt/mqtt.c
+)
+
+# ARM MBEDTLS related files of lwIP rep
+set(lwipmbedtls_SRCS
+    ${LWIP_DIR}/src/apps/altcp_tls/altcp_tls_mbedtls.c
+    ${LWIP_DIR}/src/apps/altcp_tls/altcp_tls_mbedtls_mem.c
+    ${LWIP_DIR}/src/apps/snmp/snmpv3_mbedtls.c
+)
+
+# All LWIP files without apps
+set(lwipnoapps_SRCS
+    ${lwipcore_SRCS}
+    ${lwipcore4_SRCS}
+    ${lwipcore6_SRCS}
+    ${lwipapi_SRCS}
+    ${lwipnetif_SRCS}
+    ${lwipsixlowpan_SRCS}
+    ${lwipppp_SRCS}
+)
 
 # LWIPAPPFILES: All LWIP APPs
-set(LWIPAPPFILES
-	${SNMPFILES}
-	${HTTPDFILES}
-	${LWIPERFFILES}
-	${SNTPFILES}
-	${MDNSFILES}
-	${NETBIOSNSFILES}
-	${TFTPFILES}
-	${MQTTFILES})
+set(lwipallapps_SRCS
+    ${lwipsnmp_SRCS}
+    ${lwiphttp_SRCS}
+    ${lwipiperf_SRCS}
+    ${lwipsmtp_SRCS}
+    ${lwipsntp_SRCS}
+    ${lwipmdns_SRCS}
+    ${lwipnetbios_SRCS}
+    ${lwiptftp_SRCS}
+    ${lwipmqtt_SRCS}
+    ${lwipmbedtls_SRCS}
+)
+
