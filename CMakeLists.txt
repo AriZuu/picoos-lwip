@@ -30,18 +30,17 @@
 include_guard(GLOBAL)
 
 set(LWIP_DIR lwip)
-include(${CMAKE_CURRENT_LIST_DIR}/Filelists.cmake)
+set(LWIP_INCLUDE_DIRS
+    include
+    ${LWIP_DIR}/src/include
+    ${LWIP_DIR}/src/include/ipv4
+    ${LWIP_DIR}/src/include/ipv6)
+
+include(${CMAKE_CURRENT_LIST_DIR}/lwip/src/Filelists.cmake)
 set(SRC
     sys_arch.c
     sockets.c
-    apps/dhcps/dhcps.c
-    ${lwipcore_SRCS}
-    ${lwipcore4_SRCS}
-    ${lwipcore6_SRCS}
-    ${lwipapi_SRCS}
-    ${lwipnetif_SRCS}
-    ${lwipsnmp_SRCS}
-    ${lwipsntp_SRCS})
+    apps/dhcps/dhcps.c)
 
 if(PORT STREQUAL "unix")
 set(IFSRC netif/tapif.c)
@@ -57,11 +56,10 @@ add_peer_directory(../picoos-micro)
 
 add_library(picoos-lwip STATIC ${SRC})
 
-target_include_directories(picoos-lwip
-  PUBLIC include
-         ${LWIP_DIR}/src/include
-         ${LWIP_DIR}/src/include/ipv4
-         ${LWIP_DIR}/src/include/ipv6
-         ${LWIPDRIVER_INC})
+target_link_libraries(lwipcore picoos-micro picoos)
+target_link_libraries(lwipallapps lwipcore)
 
-target_link_libraries(picoos-lwip picoos-micro picoos)
+target_include_directories(picoos-lwip
+  PUBLIC ${LWIP_INCLUDE_DIRS})
+
+target_link_libraries(picoos-lwip lwipallapps lwipcore)
